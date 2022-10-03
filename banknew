@@ -1,0 +1,115 @@
+#include<stdio.h> 
+#include<string.h>
+void login();
+void reg();
+void check_balance(); 
+void deposite(); 
+void login1();
+struct login 
+{ 
+  char user[100],pass[100];
+
+}l;
+
+struct detail
+{ 
+  char pin_card_no[100],name[100];
+
+} acc_detail;
+
+struct bank 
+{   
+  char amount[100];
+
+}balance_detil;
+void reg()
+{
+    	printf("\n[------------------------------------------------]REGISTER HERE[------------------------------------------------]\n\n");
+	
+		FILE *fp;
+		fp=fopen("login.txt","w");
+		
+		printf("\n\t\t\t\t\t\t ENTER USERNAME:");
+		scanf("%s",l.user);
+		printf("\n\t\t\t\t\t\t ENTER PASSWORD:");
+		scanf("%s",l.pass);
+	
+		fprintf(fp,"%s\n%s",l.user,l.pass);
+	    printf("\n\n\t\t\t\t\t\t*REGISTRATION DONE*\n");
+	    printf("\n[----------------------------------------------------------------------------------------------------------------]\n\n");
+	    fclose(fp);
+	    login1();
+	
+		
+}
+void login()
+{
+				char u[20],p[20];
+				printf("\n[------------------------------------------------]LOGIN HERE[------------------------------------------------]\n\n");
+			   
+		        printf("\n\t\t\t\t\t\t ENTER USERNAME:");
+				scanf("%s",u);
+				printf("\n\t\t\t\t\t\t ENTER PASSWORD:");
+				scanf("%s",p);
+			
+				FILE *fp1;
+				fflush(stdin);
+	
+				fp1=fopen("login.txt","r");
+				
+				while(fscanf(fp1,"%s\n%s",l.user,l.pass)!=EOF)
+				{
+					
+					if(((strcmp(l.user,u)==0))&&((strcmp(l.pass,p)==0)))
+			   		{
+			    		printf("\n \n\t\t\t\t\t\t *LOGIN CORRECT* \n");	
+			    		printf("\n[----------------------------------------------------------------------------------------------------------------]\n\n");
+			    	     
+						//menu();
+			   	 	}			 		
+		    	    else 
+			        {
+		 	        	printf("\n\n\t\t\t\t \t*LOGIN INCORRECT*\n");	
+			        	printf("\n[----------------------------------------------------------------------------------------------------------------]\n\n");
+			        
+			        	login();
+ 		   	        }
+ 		   	    	fclose(fp1);
+                }
+}
+void login1()
+{
+	char ch;
+	printf("\nDO U WANT TO SIGN IN RIGHT NOW PRESS 'y'\n ");
+	fflush(stdin);
+	scanf("%c",&ch);
+	if((ch=='Y')||(ch=='y'))
+	{
+		login();	
+	
+    }
+}
+main()
+{
+	int no;
+	printf("\n_________________________________________________________________________________________________________________\n");
+	printf("\n***************************************************]AXIS BANK[***************************************************");
+	printf("\n_________________________________________________________________________________________________________________\n\n\n\n");
+	printf("\n[------------------------------------------------]LOGIN PAGE[--------------------------------------------------]\n\n");
+	printf("\n\t\t\t\t\t\t 1....REGISTER");
+	printf("\n\t\t\t\t\t\t 1....LOGIN\n");
+	printf("\n\t\t\t\t\t\t SELECT YOUR LOGIN:");
+	scanf("%d",&no);
+	system("cls");
+	if(no==1)
+	{
+		reg();
+	}
+	else if(no==2)
+	{
+		login();
+	}
+	
+	
+	
+}
