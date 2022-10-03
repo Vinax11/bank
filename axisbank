@@ -1,0 +1,231 @@
+#include<stdio.h> 
+#include<string.h>
+void login();
+void reg();
+void checkbalance(); 
+void deposite(); 
+void login1();
+void menu();
+void go();
+struct login 
+{ 
+  char user[100],pass[100];
+
+}l;
+
+struct detail
+{ 
+  char pin_card_no[100],name[100];
+
+} acc_detail;
+
+struct bank 
+{   
+  char amount[100];
+
+}deposite1;
+void reg()
+{
+    	printf("\n[------------------------------------------------]REGISTER HERE[------------------------------------------------]\n\n");
+	
+		FILE *fp;
+		fp=fopen("login.txt","w");
+		
+		printf("\n\t\t\t\t\t\t ENTER USERNAME:");
+		scanf("%s",l.user);
+		printf("\n\t\t\t\t\t\t ENTER PASSWORD:");
+		scanf("%s",l.pass);
+	
+		fprintf(fp,"%s\n%s",l.user,l.pass);
+	    printf("\n\n\t\t\t\t\t\t*REGISTRATION DONE*\n");
+	    printf("\n[----------------------------------------------------------------------------------------------------------------]\n\n");
+	    fclose(fp);
+	    login1();
+	    system("cls");
+		
+}
+void login()
+{
+				char u[20],p[20];
+				printf("\n[------------------------------------------------]LOGIN HERE[------------------------------------------------]\n\n");
+			   
+		        printf("\n\t\t\t\t\t\t ENTER USERNAME:");
+				scanf("%s",u);
+				printf("\n\t\t\t\t\t\t ENTER PASSWORD:");
+				scanf("%s",p);
+			
+				FILE *fp1;
+				fflush(stdin);
+	
+				fp1=fopen("login.txt","r");
+				
+				while(fscanf(fp1,"%s\n%s",l.user,l.pass)!=EOF)
+				{
+					
+					if(((strcmp(l.user,u)==0))&&((strcmp(l.pass,p)==0)))
+			   		{
+			    		printf("\n \n\t\t\t\t\t\t *LOGIN CORRECT* \n");	
+			    		printf("\n[----------------------------------------------------------------------------------------------------------------]\n\n");
+			    	     
+						menu();
+			   	 	}			 		
+		    	    else 
+			        {
+		 	        	printf("\n\n\t\t\t\t \t*LOGIN INCORRECT*\n");	
+			        	printf("\n[----------------------------------------------------------------------------------------------------------------]\n\n");
+			        
+			        	login();
+ 		   	        }
+ 		   	    	fclose(fp1);
+                }
+}
+void withdraw()
+{ 
+	char no[100];
+	char sum;
+	printf("\n[--------------------------------------------------]WITHDRAW MONEY[---------------------------------------------------]\n\n");
+	FILE *fp,*fp1;
+
+	fp=fopen("bankaccount.txt","r");
+
+	fscanf(fp,"%s",deposite1.amount);
+	printf("\n\t\t\t\t\tYOU BALANCE AMOUNT IS%s",deposite1.amount);
+	printf("\n\t\t\t\t\tENTER AMOUNT DO YOU WANT TO WITHDRAW:");
+	
+	fflush(stdin);
+	scanf("%s",no);
+	//sum=no-deposite1.amount;
+	printf("%s",sum);
+    
+    fp1=fopen("bankaccount.txt","w");
+    printf("%s",sum);
+    fprintf(fp1,"%s",sum);
+    
+	if(no<=deposite1.amount)
+	{
+		printf("\n\n\t\t\t\t\t*WITHDRAW SUCCESSFULLY*");	
+		printf("\n\t\t\t\t\t*COLLECT YOUR CASH*");
+	}
+	else 
+	{
+		printf("\n\n\t\t\t\t\t*BALANCE INSUFFICIENT*");
+		printf("\n\n\t\t\t\t\t*PLEASE CONTACT TO BANK CUSTOMER SERVICES*");
+	}
+	fclose(fp);
+	fclose(fp1);
+	
+}
+void menu()
+{   
+    system("cls");
+    int no;
+	printf("\n[--------------------------------------------------]MENU[---------------------------------------------------]\n\n");
+	printf("\n\t\t\t\t\t\t1...DEPOSITE");	 
+	printf("\n\t\t\t\t\t\t2...CHECK BALANCE");
+	printf("\n\t\t\t\t\t\t3...WITHDRAW");
+	printf("\n\t\t\t\t\t\t4...GOTO LOGIN PAGE");
+	printf("\n\t\t\t\t\t\t5...EXIT");
+	printf("\n\n[---------------------------------------------------------------------------------------------------------]");
+	printf("\n\n PLESASE SELECT YOUR CHOICE:");
+	scanf("%d",&no);
+	switch (no)
+	{
+		case 1: deposite();
+		        break;
+	    case 2:checkbalance();
+	            break;
+	    case 3: withdraw();
+	           break;
+	}
+}
+void deposite()
+{
+	printf("\n[--------------------------------------------------]DEPOSITE[---------------------------------------------------]\n\n");
+	FILE *fp;
+
+	fp=fopen("bankaccount.txt","a");
+
+	printf("\n\t\t\t\t\tENTER AMOUNT YOU WANT TO DEPOSITE:");  
+	scanf("%s",deposite1.amount); 
+	printf("\n\n\t\t\t\t\tYOUR AMOUNT IS %srs DEPOSITE SUCCESSFULLY",deposite1.amount); 
+	printf("\n\n[---------------------------------------------------------------------------------------------------------------]\n\n");
+	fprintf(fp,"%s\n",deposite1.amount); 
+	fclose(fp);
+	go(); 
+}
+void checkbalance()
+{ 
+    printf("\n[--------------------------------------------------]CHECK BALANCE[---------------------------------------------------]\n\n");
+	FILE *fp;
+
+	fp=fopen("bankaccount.txt","r");
+
+	printf("\n\t\t\t\t\t\tYOUR BALANCE AMOUNT IS %srs",deposite1.amount);
+    printf("\n\n[--------------------------------------------------------------------------------------------------------------------]\n\n");
+	fclose(fp);
+	go(); 
+}
+void login1()
+{
+	char ch;
+	printf("\nDO YOU WANT TO GO MENU PRESS 'Y' AND 'N' FOR LOGIN\n ");
+	fflush(stdin);
+	scanf("%c",&ch);
+	if((ch=='Y')||(ch=='y'))
+	{   
+	    system("cls");
+		login();	
+	    
+    }
+}
+
+
+void go()
+{
+	char ch;
+	printf("\nDO U WANT TO LOGIN RIGHT NOW PRESS 'y'\n ");
+	fflush(stdin);
+	scanf("%c",&ch);
+	if((ch=='Y')||(ch=='y'))
+	{   
+	    system("cls");
+		menu();	
+	    
+    }
+    else if((ch=='N')||(ch=='n'))
+    {
+    	 system("cls");
+		login();
+	}
+}
+main()
+{
+	int no;
+	printf("\n_________________________________________________________________________________________________________________\n");
+	printf("\n***************************************************]AXIS BANK[***************************************************");
+	printf("\n_________________________________________________________________________________________________________________\n\n\n\n");
+	lo:
+	printf("\n[------------------------------------------------]LOGIN PAGE[--------------------------------------------------]\n\n");
+	printf("\n\t\t\t\t\t\t 1....REGISTER");
+	printf("\n\t\t\t\t\t\t 1....LOGIN\n");
+	printf("\n\t\t\t\t\t\t SELECT YOUR LOGIN:");
+	scanf("%d",&no);
+	system("cls");
+	if(no==1)
+	{
+		reg();
+	}
+	else if(no==2)
+	{
+		login();
+	
+	}
+	else
+	{
+		printf("PLEASE ENTER RIGHT LOGIN");
+		goto lo;
+	}
+	
+
+	
+}
